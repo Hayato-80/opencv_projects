@@ -44,8 +44,8 @@ def label(mask, out):
 
         mx = int(centroids[max_idx][0])
         my = int(centroids[max_idx][1])
-        cv.putText(out, "%d,%d"%(mx, my), (x-15, y+h+15), cv.FONT_HERSHEY_PLAIN, 1, (255, 255, 0))
-        cv.putText(out, "%d"%(s), (x, y+h+30), cv.FONT_HERSHEY_PLAIN, 1, (255, 255, 0))
+        cv.putText(out, "CoM: (X: %d, Y: %d)"%(mx, my), (x-15, y+h+15), cv.FONT_HERSHEY_PLAIN, 1, (255, 255, 0))
+        cv.putText(out, "Area: %d"%(s), (x, y+h+30), cv.FONT_HERSHEY_PLAIN, 1, (255, 255, 0))
         out = cv.rectangle(out,(x,y),(x+w, y+h), (0, 255, 0))
         return out
 
@@ -59,6 +59,7 @@ if __name__ == '__main__':
     while True:
         _, frame = cap.read()
         cv.imshow('Video', frame)
+        frame = cv.medianBlur(frame, 5)
 
         mask, out = color(frame)
 
