@@ -1,8 +1,6 @@
 import cv2 as cv
 import numpy as np
 
-import math
-
 def clahe(frame):
     # make clahe and histogram equalization
     yuv_image = cv.cvtColor(frame, cv.COLOR_BGR2YUV)
