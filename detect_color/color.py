@@ -16,9 +16,9 @@ def color(frame):
     frame = clahe(frame)
     frame_hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
 
-    low_1 = np.array([0, 50, 50])
-    high_1 = np.array([5, 255, 255])
-    low_2 = np.array([175, 50, 50])
+    low_1 = np.array([0, 100, 50])
+    high_1 = np.array([10, 255, 255])
+    low_2 = np.array([170, 100, 50])
     high_2 = np.array([180, 255, 255])
 
     mask_1 = cv.inRange(frame_hsv,low_1,high_1)
