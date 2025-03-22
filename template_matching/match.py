@@ -1,23 +1,31 @@
 import cv2 as cv
 import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-def match():
+img = cv.imread('./Lenna.png')
+template = cv.imread('./Lenna_template.png')
 
-if __name__ == '__main__':
+img_gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+template_gray = cv.cvtColor(template, cv.COLOR_BGR2GRAY)
 
-    cap = cv.VideoCapture(0,700)
-    if not cap.isOpened():
-        print("Error: Could not open camera.")
+match = cv.matchTemplate(img_gray,template_gray, cv.TM_CCOEFF_NORMED)
 
-    while True:
-        _, frame = cap.read()
-        cv.imshow('Video', frame)
-        # frame = cv.medianBlur(frame, 5)
+# Check the where the value is maximum
+# plt.imshow(match, cmap='gray')
+# plt.show()
 
-        cv.imshow('mask final',frame)
-        
-        if cv.waitKey(1) & 0xFF == ord('q'):
-            break
+# Find the location of the maximum value
+min_val, max_val, min_loc, max_loc = cv.minMaxLoc(match)
 
-    cap.release()
-    cv.destroyAllWindows()
+# Drawing bbox
+top_left = max_loc
+temp_h,temp_w,  = template.shape[:2]
+bottom_right = (top_left[0]+temp_w, top_left[1]+temp_h)
+
+# Result
+result = cv.rectangle(img, top_left, bottom_right, (0,255,0),2)
+
+cv.imshow('result',result)
+cv.waitKey(0)
+cv.destroyAllWindows()
